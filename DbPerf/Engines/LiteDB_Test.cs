@@ -16,6 +16,7 @@ namespace TestPerfLiteDB
         private string _filename;
         private LiteEngine _db;
         private int _count;
+        private List<BsonDocument> _docs;
 
         public int Count { get { return _count; } }
         public int FileLength { get { return (int)new FileInfo(_filename).Length; } }
@@ -28,6 +29,8 @@ namespace TestPerfLiteDB
             var disk = new FileDiskService(_filename, options);
 
             _db = new LiteEngine(disk, password);
+
+            _docs = Helper.GetDocs(_count).ToBson().ToList();
         }
 
         public void Prepare()
@@ -36,7 +39,7 @@ namespace TestPerfLiteDB
 
         public void Insert()
         {
-            foreach (var doc in Helper.GetDocs(_count))
+            foreach (var doc in _docs)
             {
                 _db.Insert("col", doc);
             }
@@ -44,12 +47,12 @@ namespace TestPerfLiteDB
 
         public void Bulk()
         {
-            _db.Insert("col_bulk", Helper.GetDocs(_count));
+            _db.Insert("col_bulk", _docs);
         }
 
         public void Update()
         {
-            foreach(var doc in Helper.GetDocs(_count))
+            foreach(var doc in _docs)
             {
                 _db.Update("col", doc);
             }

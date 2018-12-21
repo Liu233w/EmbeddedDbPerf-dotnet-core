@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestPerfLiteDB.Entities;
 
 namespace TestPerfLiteDB
 {
@@ -15,6 +16,7 @@ namespace TestPerfLiteDB
         private string _filename;
         private SQLiteConnection _db;
         private int _count;
+        private List<Doc> _docs;
 
         public int Count { get { return _count; } }
         public int FileLength { get { return (int)new FileInfo(_filename).Length; } }
@@ -27,6 +29,7 @@ namespace TestPerfLiteDB
             if (password != null) cs += "; Password=" + password;
             if (journal == false) cs += "; Journal Mode=Off";
             _db = new SQLiteConnection(cs);
+            _docs = Helper.GetDocs(_count).ToList();
         }
 
         public void Prepare()
@@ -48,11 +51,11 @@ namespace TestPerfLiteDB
             cmd.Parameters.Add(new SQLiteParameter("name", DbType.String));
             cmd.Parameters.Add(new SQLiteParameter("lorem", DbType.String));
 
-            foreach (var doc in Helper.GetDocs(_count))
+            foreach (var doc in _docs)
             {
-                cmd.Parameters["id"].Value = doc["_id"].AsInt32;
-                cmd.Parameters["name"].Value = doc["name"].AsString;
-                cmd.Parameters["lorem"].Value = doc["lorem"].AsString;
+                cmd.Parameters["id"].Value = doc.Id;
+                cmd.Parameters["name"].Value = doc.Name;
+                cmd.Parameters["lorem"].Value = doc.Lorem;
 
                 cmd.ExecuteNonQuery();
             }
@@ -68,11 +71,11 @@ namespace TestPerfLiteDB
                 cmd.Parameters.Add(new SQLiteParameter("name", DbType.String));
                 cmd.Parameters.Add(new SQLiteParameter("lorem", DbType.String));
 
-                foreach (var doc in Helper.GetDocs(_count))
+                foreach (var doc in _docs)
                 {
-                    cmd.Parameters["id"].Value = doc["_id"].AsInt32;
-                    cmd.Parameters["name"].Value = doc["name"].AsString;
-                    cmd.Parameters["lorem"].Value = doc["lorem"].AsString;
+                    cmd.Parameters["id"].Value = doc.Id;
+                    cmd.Parameters["name"].Value = doc.Name;
+                    cmd.Parameters["lorem"].Value = doc.Lorem;
 
                     cmd.ExecuteNonQuery();
                 }
@@ -89,11 +92,11 @@ namespace TestPerfLiteDB
             cmd.Parameters.Add(new SQLiteParameter("name", DbType.String));
             cmd.Parameters.Add(new SQLiteParameter("lorem", DbType.String));
 
-            foreach (var doc in Helper.GetDocs(_count))
+            foreach (var doc in _docs)
             {
-                cmd.Parameters["id"].Value = doc["_id"].AsInt32;
-                cmd.Parameters["name"].Value = doc["name"].AsString;
-                cmd.Parameters["lorem"].Value = doc["lorem"].AsString;
+                cmd.Parameters["id"].Value = doc.Id;
+                cmd.Parameters["name"].Value = doc.Name;
+                cmd.Parameters["lorem"].Value = doc.Lorem;
 
                 cmd.ExecuteNonQuery();
             }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LiteDB;
+using TestPerfLiteDB.Entities;
 
 namespace TestPerfLiteDB
 {
@@ -27,15 +28,15 @@ namespace TestPerfLiteDB
                 seg + " records/second");
         }
 
-        public static IEnumerable<BsonDocument> GetDocs(int count)
+        public static IEnumerable<Doc> GetDocs(int count)
         {
             for(var i = 0; i < count; i++)
             {
-                yield return new BsonDocument
+                yield return new Doc
                 {
-                    { "_id", i },
-                    { "name", Guid.NewGuid().ToString() },
-                    { "lorem", LoremIpsum(3, 5, 2, 3, 3) }
+                    Id = i,
+                    Name = Guid.NewGuid().ToString(),
+                    Lorem = LoremIpsum(3, 5, 2, 3, 3)
                 };
             }
         }
