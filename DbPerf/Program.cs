@@ -14,11 +14,11 @@ namespace TestPerfLiteDB
         static void Main(string[] args)
         {
             RunTest("LiteDB: default", new LiteDB_Test(5000, null, new FileOptions { Journal = true, FileMode = FileMode.Shared }));
-            RunTest("LiteDB: encrypted", new LiteDB_Test(5000, "mypass", new FileOptions { Journal = true, FileMode = FileMode.Shared }));
+//            RunTest("LiteDB: encrypted", new LiteDB_Test(5000, "mypass", new FileOptions { Journal = true, FileMode = FileMode.Shared }));
             RunTest("LiteDB: exclusive no journal", new LiteDB_Test(5000, null, new FileOptions { Journal = false, FileMode = FileMode.Exclusive }));
 
             RunTest("SQLite: default", new SQLite_Test(5000, null, true));
-            RunTest("SQLite: encrypted", new SQLite_Test(5000, "mypass", true));
+//            RunTest("SQLite: encrypted", new SQLite_Test(5000, "mypass", true));
             RunTest("SQLite: no journal", new SQLite_Test(5000, null, false));
 
             Console.ReadKey();
