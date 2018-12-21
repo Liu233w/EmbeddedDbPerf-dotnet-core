@@ -1,3 +1,15 @@
+embedded database benchmark on dotnet core 2.1
+===========================================
+
+A simple benchmark based on [mbdavid's work](https://github.com/mbdavid/LiteDB-Perf), but running on dotnet core
+with latest SQLite and LiteDB v4. Extra test cases such as in-memory-database and sqlite with dapper(an orm framework)
+are added.
+
+## platform
+windows 10 1803, Intel Core i7-4790 3.6Ghz, 16G RAM, NO SSD
+
+## result
+
 ```text
 LiteDB: default - 5000 records
 ==============================
