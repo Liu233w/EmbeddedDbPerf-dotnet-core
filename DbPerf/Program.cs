@@ -32,12 +32,19 @@ namespace TestPerfLiteDB
 
             test.Prepare();
 
+            GC.Collect();
             test.Run("Insert", test.Insert);
+            GC.Collect();
             test.Run("Bulk", test.Bulk);
+            GC.Collect();
             test.Run("Update", test.Update);
+            GC.Collect();
             test.Run("CreateIndex", test.CreateIndex);
+            GC.Collect();
             test.Run("Query", test.Query);
+            GC.Collect();
             test.Run("Delete", test.Delete);
+            GC.Collect();
             test.Run("Drop", test.Drop);
 
             Console.WriteLine("FileLength     : " + Math.Round((double)test.FileLength / (double)1024, 2).ToString().PadLeft(5, ' ') + " kb");
